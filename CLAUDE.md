@@ -138,7 +138,14 @@ more edge than it costs in sample/power. Tune confirm_days, base_window,
 tightness, vol_mult on real data — and beware overfitting these four knobs
 (few params, walk-forward, hold-out).
 
-## Candidate strategy: CAN SLIM quality overlay  (`canslim.py` EXISTS)
+## Candidate strategy: CAN SLIM quality overlay  (`canslim.py` + real fundamentals BUILT & TESTED)
+> REAL-DATA RESULT (`test_canslim.py`, monthly factor test on large-cap universe):
+> NO EDGE. Top-quintile minus bottom-quintile CAN SLIM score = -1.6%/month,
+> t = -1.2 (insignificant, wrong sign). The strict hard screen (C&A&L&M) passes
+> only ~0.8 names/month — CAN SLIM is a growth/smallcap method and large caps
+> almost never clear 25% qtr EPS + 20% 3y CAGR + top-20% RS at once. Caveats:
+> universe still contaminated (ETFs/penny) + a momentum-unfriendly 2024-25 window,
+> so this is directional. But CAN SLIM as a Nifty-50 screen looks unusable.
 O'Neil's CAN SLIM — a months-to-years GROWTH method, adapted here as a slow
 QUALITY OVERLAY on selection (NOT classic O'Neil; C & A can't move in 1-3 wks).
 Maps onto our stack: M=gate, L=RS/momentum selection, N+S=consolidation-breakout

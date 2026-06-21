@@ -155,7 +155,7 @@ def asof_features(parsed: dict, asof, lag_days: int = LAG_DAYS) -> dict:
         eps_q_yoy, eps_q_accel = yoy, (yoy - prev if pd.notna(prev) else np.nan)
 
     a = avail(parsed["a_eps"])
-    if a is not None and len(a) >= 4 and a.iloc[-4] > 0:
+    if a is not None and len(a) >= 4 and a.iloc[-4] > 0 and a.iloc[-1] > 0:
         eps_3y_cagr = (a.iloc[-1] / a.iloc[-4]) ** (1 / 3) - 1
 
     fii, dii = avail(parsed["fii"]), avail(parsed["dii"])
