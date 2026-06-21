@@ -114,7 +114,14 @@ same `panel` dict** so the engine runs unchanged.
 Build ONE piece at a time, show output, then proceed. Validate no look-ahead at
 each step.
 
-## Candidate strategy: consolidation breakout  (`consolidation_breakout.py` EXISTS)
+## Candidate strategy: consolidation breakout  (`consolidation_breakout.py` + `test_signals.py` BUILT & TESTED)
+> REAL-DATA RESULT (3y large-cap, 2023-06→2026-06, via `test_signals.py`):
+> KILLED. The setup has a statistically significant NEGATIVE edge — 5d fwd
+> return after firing = -1.2% vs ~0 baseline, t = -4.0 (10d t = -3.3); backtest
+> CAGR -2.7% vs +3.8% B&H; OOS Sharpe -2.05 ≈ IS -1.97 (consistent, not overfit);
+> gate/selection ablations don't rescue it. Interpretation: large-cap breakouts
+> short-term MEAN-REVERT here — fading the breakout / buying pullbacks is the
+> hypothesis worth testing next (test it, don't just flip the sign on faith).
 Volatility-contraction / base-breakout (VCP / Darvas family), operationalized:
 - BASE: ~20–30 day consolidation, range (high−low)/mean < ~12% (vol contracted)
 - SENTIMENT: delivery % over confirm days > base-period delivery %
