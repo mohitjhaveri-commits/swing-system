@@ -34,6 +34,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 from pipeline.load_bhavcopy import load_frames
+from pipeline.adjust import adjust_close
 
 
 def _market_proxy(close: pd.DataFrame, value: pd.DataFrame,
@@ -57,7 +58,9 @@ def build_panel(min_history: int = 1, min_price: float = 5.0) -> dict:
     min_price   : drop penny symbols whose median close < this (Rs)
     """
     f = load_frames()
-    close, value, deliv = f["close"], f["value"], f["deliv"]
+    # ---- split/bonus adjustment FIRST (continuous, honest return series) -----
+    close_adj, events = adjust_close(f["close"], f["prev_close"])
+    close, value, deliv = close_adj, f["value"], f["deliv"]
 
     # ---- light hygiene (NOT cherry-picking: structural, knowable upfront) ----
     keep = (close.notna().sum(axis=0) >= min_history) & (close.median() >= min_price)
@@ -71,7 +74,7 @@ def build_panel(min_history: int = 1, min_price: float = 5.0) -> dict:
     value.columns = list(ids)
     deliv.columns = list(ids)
 
-    market = _market_proxy(f["close"], f["value"]).reindex(close.index)
+    market = _market_proxy(close_adj, f["value"]).reindex(close.index)
     sectors = np.zeros(len(symbols), dtype=int)     # placeholder (see notes)
 
     return {"close": close, "value": value, "deliv": deliv,

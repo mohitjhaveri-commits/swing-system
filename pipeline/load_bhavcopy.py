@@ -34,11 +34,13 @@ def _read_one(path: Path) -> pd.DataFrame:
     df["date"] = pd.to_datetime(df["DATE1"].str.strip(), format="%d-%b-%Y")
     df["symbol"] = df["SYMBOL"].str.strip()
     df["close"] = pd.to_numeric(df["CLOSE_PRICE"], errors="coerce")
+    # PREV_CLOSE is NSE's OFFICIAL adjusted prior close -> drives split/bonus adj
+    df["prev_close"] = pd.to_numeric(df["PREV_CLOSE"], errors="coerce")
     # TURNOVER_LACS is rupees-in-lakhs -> rupees
     df["value"] = pd.to_numeric(df["TURNOVER_LACS"], errors="coerce") * 1e5
     # DELIV_PER is a percentage -> fraction; blanks become NaN
     df["deliv"] = pd.to_numeric(df["DELIV_PER"], errors="coerce") / 100.0
-    return df[["date", "symbol", "close", "value", "deliv"]]
+    return df[["date", "symbol", "close", "prev_close", "value", "deliv"]]
 
 
 def load_frames(cache: Path = CACHE) -> dict:
@@ -52,7 +54,7 @@ def load_frames(cache: Path = CACHE) -> dict:
     long = long.drop_duplicates(["date", "symbol"], keep="last")
 
     frames = {}
-    for col in ("close", "value", "deliv"):
+    for col in ("close", "prev_close", "value", "deliv"):
         frames[col] = (long.pivot(index="date", columns="symbol", values=col)
                            .sort_index())
     return frames
