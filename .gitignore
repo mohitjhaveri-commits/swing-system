@@ -1,0 +1,26 @@
+# --- Secrets / credentials (NEVER commit) ---
+config.py
+*.env
+.env
+*secret*
+*token*
+credentials*
+
+# --- Python ---
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# --- Data caches (large / regenerable) ---
+data/
+*.parquet
+*.csv
+*.feather
+
+# --- OS / editor ---
+.DS_Store
+.vscode/
+.idea/
