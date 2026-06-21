@@ -5,15 +5,17 @@
 
 ## What this project is
 A systematic, end-of-day (EOD) swing-trading research system for Indian
-small/mid-cap **cash equity (delivery)**. Holding period **1–3 weeks**. Capital
-~₹5L. The goal of the current phase is a **rigorously backtested, trustworthy
-methodology — not live trading.** We are validating whether a real edge exists
-before risking money.
+**large-cap cash equity (delivery), universe = Nifty 50**. Holding period
+**1–3 weeks**. Capital ~₹5L. The goal of the current phase is a **rigorously
+backtested, trustworthy methodology — not live trading.** We are validating
+whether a real edge exists before risking money.
 
 ## Honest mandate (do not let me chase fantasy)
-- Target = **beat a smallcap benchmark risk-adjusted, through the cycle.** The
-  likely output of doing that well is ~20–25% CAGR as a *multi-year average*,
-  NOT an annual floor.
+- Target = **beat the Nifty 50 (total return) risk-adjusted, through the cycle.**
+  Large caps are efficient, so the realistic output of doing this well is more
+  like **~12–16% CAGR as a *multi-year average*** (NOT an annual floor), with the
+  payoff being LOWER drawdown and effectively unlimited capacity — not smallcap-
+  style 20–25%. Beating Nifty 50 risk-adjusted at all is already a real result.
 - **Drawdown is the binding constraint:** design for max DD ≤ 15–20%.
 - Live always underperforms backtest. We only believe live >20% if the
   out-of-sample backtest shows ~30%+ gross with ≤20% max DD.
@@ -67,9 +69,13 @@ score overfits in-sample and hides which layer broke.
   to a real mechanism (capacity advantage / forced flows / regime behaviour).
 
 ## Universe filters (point-in-time, daily)
-Mkt cap ~₹1,000Cr–₹20,000Cr; 20-day median traded value ≥ ₹5Cr/day; price ≥ ₹30;
-exclude ASM/GSM Stage-2+, F&O ban, circuit-locked; veto catastrophic-gap risk
-(fraud/audit flags, solvency cliff, pledge spikes).
+Universe = **Nifty 50** (large-cap). Use point-in-time membership (NOT today's
+list) to stay survivorship-free; until historical membership is wired, proxy by
+the top ~50 names by trailing market cap / traded value each day. Liquidity and
+ASM/GSM/circuit/F&O-ban filters rarely bind for Nifty 50 names but stay in as
+cheap guards. Catastrophic-gap risk is far lower than in smallcaps but the
+per-name loss cap stays. NOTE the tension: 50 names is a SMALL pond — a selective
+breakout may yield ~no simultaneous candidates; if so, widen to Nifty 100.
 
 ## Metrics we judge by
 CAGR, Sharpe, Sortino, MaxDD, **Calmar (CAGR/MaxDD)**, hit rate, avg win/loss,
@@ -132,7 +138,8 @@ Maps onto our stack: M=gate, L=RS/momentum selection, N+S=consolidation-breakout
 timing, C+A+I=the fundamental quality filter (turned back on).
 - C: current-qtr EPS YoY ≥ 25% (bonus accelerating)
 - A: 3-yr EPS growth ≥ ~20% AND ROE ≥ 17%
-- N: price near/above 52-week high   S: small float + up-day volume
+- N: price near/above 52-week high   S: up-day volume (NOTE: classic "small
+  float" does NOT apply to large caps — drop the float test, keep volume)
 - L: relative-strength rank ≥ 80 (top 20% by ~6m perf)
 - I: institutional/fund holding rising QoQ    M: gate risk-on
 USE: final buy list = CAN SLIM leader AND breakout firing. CAN SLIM = WHO,
