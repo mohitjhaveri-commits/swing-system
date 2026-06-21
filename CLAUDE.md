@@ -163,6 +163,25 @@ TEST: does the CAN SLIM filter raise the breakout event-study edge & Calmar vs
 breakouts ALONE, after costs? Fewer-but-better only wins if "better" is real.
 Beware: growth/bull-biased; qualitative "N" (new product/mgmt) not automatable.
 
+## Candidate strategy: short-term mean-reversion  (`mean_reversion.py` + `test_meanrev.py` BUILT & TESTED)
+> Born from the breakout's t=-4 (strength gets faded). "Buy a short-term dip
+> within an uptrend." REAL-DATA RESULT on the CLEAN real Nifty 50 universe:
+> MARGINAL / PROMISING-BUT-UNCONFIRMED, do NOT deploy.
+> - Backtest BEAT the benchmark: CAGR +0.9% vs -1.2%, Sharpe 0.32 vs ~0, and
+>   MaxDD -3.1% vs -20.8% over a flat/down tape. Selection EARNS its keep
+>   (removing it -> -0.4%); gate mainly controls drawdown.
+> - BUT the event study does NOT clear the bar: best 5d t-stat ~1.7 (<2), mixed
+>   across params, one setting significantly NEGATIVE. And the signal shows a
+>   suspicious NEGATIVE edge on synthetic (t=-3.4) -> the event-study/ signal may
+>   carry a conditioning bias on high-frequency signals. INVESTIGATE before trust.
+> - Verdict: best result so far, but the edge leans on risk-control + selection,
+>   not a confirmed raw signal. Needs the synthetic-bias dig + more history/OOS.
+
+## Universe / benchmark: real Nifty 50 now wired (`pipeline/nifty50.py`)
+Official NSE constituent list -> clean membership (drops ETFs/penny), real sector
+ids from Industry, equal-weight TR benchmark. Mild survivorship caveat (current
+list applied historically). Liquidity-proxy `universe.py` is superseded for tests.
+
 ## Conventions
 - Python 3, numpy/pandas. Keep signals pluggable (functions returning per-stock
   scores). Cache aggressively; never re-fetch what's on disk. Small, reviewable
